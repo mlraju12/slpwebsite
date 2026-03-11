@@ -1,0 +1,216 @@
+/* Logo: hide white background so only letters/design show (mix-blend-mode: multiply) */
+.slp-logo {
+  background: transparent !important;
+  border: none;
+  box-shadow: none;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.slp-logo-wrap {
+  background: transparent;
+  display: inline-block;
+  line-height: 0;
+}
+/* SLP Microsystems – section animations with stagger */
+html:has(.slp-site) {
+  scroll-behavior: smooth;
+}
+.slp-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.slp-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slp-stagger > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.slp-stagger.visible > *:nth-child(1) { transition-delay: 0.1s; }
+.slp-stagger.visible > *:nth-child(2) { transition-delay: 0.2s; }
+.slp-stagger.visible > *:nth-child(3) { transition-delay: 0.3s; }
+.slp-stagger.visible > *:nth-child(4) { transition-delay: 0.4s; }
+.slp-stagger.visible > *:nth-child(5) { transition-delay: 0.5s; }
+.slp-stagger.visible > *:nth-child(6) { transition-delay: 0.6s; }
+.slp-stagger.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slp-gradient-text {
+  background: linear-gradient(135deg, #0891b2 0%, #0f766e 50%, #155e75 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 8s ease infinite;
+}
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.slp-hero-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f766e 100%);
+  background-size: 400% 400%;
+  animation: hero-bg 15s ease infinite;
+}
+@keyframes hero-bg {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.slp-dots {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.slp-dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: dot-pulse 3s ease-in-out infinite;
+}
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 0.7; transform: scale(1); }
+}
+
+/* Progress bar fill animation */
+.slp-progress-bar {
+  width: 0;
+  animation: slp-progress-fill 1.2s ease-out forwards;
+}
+@keyframes slp-progress-fill {
+  to { width: var(--progress-width, 0); }
+}
+
+/* Hero metrics panel – subtle float */
+.slp-panel-float {
+  animation: slp-float-panel 6s ease-in-out infinite;
+}
+@keyframes slp-float-panel {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Hover lift for cards and buttons */
+.slp-hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.slp-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* Product card hover */
+.slp-card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.slp-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(6, 182, 212, 0.25);
+}
+
+/* Button hover glow */
+.slp-btn-glow:hover {
+  box-shadow: 0 0 24px rgba(6, 182, 212, 0.4);
+}
+
+/* Ocean waves – right side, 1/4 of page, blue, animated, diagonal */
+.slp-waves-wrap {
+  position: absolute;
+  top: -10%;
+  bottom: -10%;
+  right: -2%;
+  width: 28%;
+  min-width: 220px;
+  max-width: 420px;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  transform: rotate(-8deg);
+}
+.slp-waves-wrap svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+}
+
+/* Two waves that come from opposite sides, meet in the middle, then fade out */
+.slp-wave-left,
+.slp-wave-right {
+  transform-origin: center center;
+  opacity: 0;
+}
+
+.slp-wave-left {
+  animation: slp-wave-left-move 4.5s ease-in-out infinite;
+}
+.slp-wave-left:nth-child(1) { animation-delay: 0s; }
+.slp-wave-left:nth-child(3) { animation-delay: -0.75s; }
+.slp-wave-left:nth-child(5) { animation-delay: -1.5s; }
+.slp-wave-left:nth-child(7) { animation-delay: -2.25s; }
+.slp-wave-left:nth-child(9) { animation-delay: -3s; }
+.slp-wave-left:nth-child(11) { animation-delay: -3.75s; }
+
+.slp-wave-right {
+  animation: slp-wave-right-move 4.5s ease-in-out infinite;
+}
+.slp-wave-right:nth-child(2) { animation-delay: -0.4s; }
+.slp-wave-right:nth-child(4) { animation-delay: -1.15s; }
+.slp-wave-right:nth-child(6) { animation-delay: -1.9s; }
+.slp-wave-right:nth-child(8) { animation-delay: -2.65s; }
+.slp-wave-right:nth-child(10) { animation-delay: -3.4s; }
+.slp-wave-right:nth-child(12) { animation-delay: -0.9s; }
+
+@keyframes slp-wave-left-move {
+  0% {
+    transform: translateX(-40%);
+    opacity: 0;
+  }
+  30% {
+    transform: translateX(-15%);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(15%);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(40%);
+    opacity: 0;
+  }
+}
+
+@keyframes slp-wave-right-move {
+  0% {
+    transform: translateX(40%);
+    opacity: 0;
+  }
+  30% {
+    transform: translateX(15%);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(-15%);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(-40%);
+    opacity: 0;
+  }
+}
