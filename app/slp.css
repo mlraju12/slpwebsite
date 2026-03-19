@@ -39,6 +39,89 @@ html:has(.slp-site) {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Product section – entrance animations: fish (CloudFish), tide (TideSync), from right (others) */
+#products .slp-product-entrance-fish,
+#products .slp-product-entrance-tide,
+#products .slp-product-entrance-right {
+  opacity: 0;
+}
+#products .slp-product-entrance-fish {
+  transform: translateX(-120%);
+}
+#products .slp-product-entrance-tide {
+  transform: translateY(80%);
+}
+#products .slp-product-entrance-right {
+  transform: translateX(120%);
+}
+#products.products-entrance-visible .slp-product-entrance-fish {
+  animation: slp-fish-in 0.9s ease-out forwards;
+  animation-delay: 0.1s;
+}
+#products.products-entrance-visible .slp-product-entrance-tide {
+  animation: slp-tide-in 0.9s ease-out forwards;
+  animation-delay: 0.3s;
+}
+#products.products-entrance-visible .slp-product-entrance-right:nth-child(3) {
+  animation: slp-right-in 0.6s ease-out forwards;
+  animation-delay: 0.5s;
+}
+#products.products-entrance-visible .slp-product-entrance-right:nth-child(4) {
+  animation: slp-right-in 0.6s ease-out forwards;
+  animation-delay: 0.65s;
+}
+@keyframes slp-fish-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%) rotate(-3deg);
+  }
+  35% {
+    opacity: 0.9;
+    transform: translateX(-30%) rotate(2deg);
+  }
+  65% {
+    opacity: 1;
+    transform: translateX(8%) rotate(-1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+@keyframes slp-tide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(80%) scale(0.95);
+  }
+  30% {
+    opacity: 0.8;
+    transform: translateY(-20%) scale(1.02);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(12%) scale(0.99);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-5%) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes slp-right-in {
+  0% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .slp-gradient-text {
   background: linear-gradient(135deg, #0891b2 0%, #0f766e 50%, #155e75 100%);
   background-size: 200% 200%;
@@ -93,6 +176,28 @@ html:has(.slp-site) {
 @keyframes slp-float-panel {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
+}
+
+/* Push-button cards – subtle idle animation + smooth hover/active */
+.slp-push-btn {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: slp-push-btn-idle 4s ease-in-out infinite;
+}
+.slp-push-btn:hover {
+  animation: none;
+}
+.slp-push-btn:active {
+  animation: none;
+}
+@keyframes slp-push-btn-idle {
+  0%, 100% {
+    box-shadow: 0 8px 0 0 rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    box-shadow: 0 10px 0 0 rgba(0, 0, 0, 0.26), 0 8px 24px rgba(0, 0, 0, 0.18);
+    transform: translateY(-2px) scale(1.01);
+  }
 }
 
 /* Hover lift for cards and buttons */
@@ -213,4 +318,86 @@ html:has(.slp-site) {
     transform: translateX(-40%);
     opacity: 0;
   }
+}
+
+/* CloudFish product page – same animated background as cloudfish.slpmicrosystems.com */
+.cloudfish-product-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.cloudfish-product-bg .cloudfish-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  will-change: transform;
+}
+.cloudfish-product-bg .cloudfish-blob--1 {
+  width: min(80vw, 600px);
+  height: min(80vw, 600px);
+  top: -20%;
+  left: -15%;
+  background: radial-gradient(circle, rgba(45, 38, 89, 0.35) 0%, rgba(45, 38, 89, 0.08) 50%, transparent 70%);
+  animation: cloudfish-blob-1 25s ease-in-out infinite;
+}
+.cloudfish-product-bg .cloudfish-blob--2 {
+  width: min(60vw, 450px);
+  height: min(60vw, 450px);
+  top: 30%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(255, 140, 0, 0.2) 0%, rgba(232, 93, 44, 0.08) 50%, transparent 70%);
+  animation: cloudfish-blob-2 28s ease-in-out infinite;
+}
+.cloudfish-product-bg .cloudfish-blob--3 {
+  width: min(50vw, 380px);
+  height: min(50vw, 380px);
+  bottom: -15%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(45, 38, 89, 0.25) 0%, rgba(106, 110, 140, 0.06) 50%, transparent 70%);
+  animation: cloudfish-blob-3 22s ease-in-out infinite;
+}
+.cloudfish-product-bg .cloudfish-blob--4 {
+  width: min(40vw, 320px);
+  height: min(40vw, 320px);
+  bottom: 20%;
+  right: 15%;
+  background: radial-gradient(circle, rgba(232, 93, 44, 0.15) 0%, rgba(255, 140, 0, 0.06) 50%, transparent 70%);
+  animation: cloudfish-blob-4 30s ease-in-out infinite;
+}
+@keyframes cloudfish-blob-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(5%, 8%) scale(1.05); }
+  66% { transform: translate(-4%, -5%) scale(0.98); }
+}
+@keyframes cloudfish-blob-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-8%, -4%) scale(1.08); }
+  66% { transform: translate(3%, 6%) scale(0.95); }
+}
+@keyframes cloudfish-blob-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6%, -7%) scale(1.06); }
+}
+@keyframes cloudfish-blob-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-5%, 5%) scale(1.04); }
+  66% { transform: translate(4%, -3%) scale(0.97); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cloudfish-product-bg .cloudfish-blob {
+    animation: none;
+  }
+}
+.cloudfish-product-bg .cloudfish-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(45, 38, 89, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 38, 89, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
 }

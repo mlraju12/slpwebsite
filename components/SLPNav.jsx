@@ -5,33 +5,43 @@ import { useState, useEffect } from 'react';
 
 const NAV_LINKS = [
   {
-    href: '#products',
+    href: '/#products',
     label: 'Products',
     children: [
-      { href: '#cloudfish', label: 'CloudFish' },
-      { href: '#tidesync', label: 'TideSync' },
+      { href: '/products/cloudfish', label: 'CloudFish' },
+      { href: '/products/tidesync', label: 'TideSync' },
     ],
   },
-  { href: '#services', label: 'Services' },
-  { href: '#talent', label: 'Talent Solutions' },
-  { href: '#careers', label: 'Careers' },
-  { href: '#resources', label: 'Resources' },
-  { href: '#who-we-are', label: 'Who We Are' },
+  {
+    href: '/#services',
+    label: 'Services',
+    children: [
+      { href: '/#oracle-cloud-services', label: 'Oracle Cloud Services' },
+      { href: '/#data-solutions', label: 'Data Solutions' },
+      { href: '/#managed-services', label: 'Managed Services' },
+    ],
+  },
+  { href: '/#talent', label: 'Talent Solutions' },
+  { href: '/#careers', label: 'Careers' },
+  { href: '/#resources', label: 'Resources' },
+  { href: '/#who-we-are', label: 'Who We are | What We do' },
 ];
 
 export default function SLPNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [productsOpen, setProductsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(null);
   const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const sections = [];
     NAV_LINKS.forEach((item) => {
+      const id = item.href.includes('#') ? item.href.split('#')[1] : null;
+      if (id) sections.push(id);
       if (item.children && item.children.length > 0) {
-        sections.push(item.href.slice(1));
-        item.children.forEach((c) => sections.push(c.href.slice(1)));
-      } else {
-        sections.push(item.href.slice(1));
+        item.children.forEach((c) => {
+          const cId = c.href.includes('#') ? c.href.split('#')[1] : null;
+          if (cId) sections.push(cId);
+        });
       }
     });
     const observer = new IntersectionObserver(
@@ -68,10 +78,10 @@ export default function SLPNav() {
         </Link>
         <nav className="hidden md:flex items-center gap-1 relative">
           {NAV_LINKS.map((item) => {
-            const sectionId = item.href.slice(1);
+            const sectionId = item.href.includes('#') ? item.href.split('#')[1] : '';
             const isActive =
               activeSection === sectionId ||
-              (item.children && item.children.some((c) => c.href.slice(1) === activeSection));
+              (item.children && item.children.some((c) => c.href.includes('#') && c.href.split('#')[1] === activeSection));
             const linkClass =
               'px-3 py-2 rounded-lg text-sm font-medium transition-colors ' +
               (isActive ? 'bg-aqua/15 text-teal-dark' : 'text-slate-700 hover:bg-aqua/10 hover:text-teal-dark');
@@ -81,8 +91,8 @@ export default function SLPNav() {
                 <div
                   key={item.href}
                   className="relative"
-                  onMouseEnter={() => setProductsOpen(true)}
-                  onMouseLeave={() => setProductsOpen(false)}
+                  onMouseEnter={() => setDropdownOpen(item.href)}
+                  onMouseLeave={() => setDropdownOpen(null)}
                 >
                   <a href={item.href} className={'inline-flex items-center gap-0.5 ' + linkClass}>
                     {item.label}
@@ -90,18 +100,31 @@ export default function SLPNav() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </a>
-                  {productsOpen && (
+                  {dropdownOpen === item.href && (
                     <div className="absolute top-full left-0 pt-1 min-w-[140px]">
-                      <div className="rounded-lg border-2 border-teal/30 bg-teal/5 shadow-lg py-1">
-                        {item.children.map((sub) => (
-                          <a
-                            key={sub.href}
-                            href={sub.href}
-                            className="block px-4 py-2 text-sm text-slate-700 hover:bg-teal/15 hover:text-teal-dark rounded-none first:rounded-t-md last:rounded-b-md transition-colors"
-                          >
-                            {sub.label}
-                          </a>
-                        ))}
+                      <div className="rounded-lg border-2 border-orange-500 bg-white shadow-lg py-1">
+                        {item.children.map((sub) => {
+                          const isPath = sub.href.startsWith('/');
+                          const isExternal = sub.href.startsWith('http');
+                          return isPath ? (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              className="block px-4 py-2 text-sm text-slate-800 hover:bg-teal/15 hover:text-teal-dark font-medium rounded-none first:rounded-t-md last:rounded-b-md transition-colors"
+                            >
+                              {sub.label}
+                            </Link>
+                          ) : (
+                            <a
+                              key={sub.href}
+                              href={sub.href}
+                              {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
+                              className="block px-4 py-2 text-sm text-slate-800 hover:bg-teal/15 hover:text-teal-dark font-medium rounded-none first:rounded-t-md last:rounded-b-md transition-colors"
+                            >
+                              {sub.label}
+                            </a>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -124,7 +147,7 @@ export default function SLPNav() {
             height={32}
           />
           <a
-            href="#contact"
+            href="/#contact"
             className="hidden sm:inline-flex px-4 py-2 rounded-lg text-sm font-semibold bg-teal text-white hover:bg-teal-dark transition-all"
           >
             Contact
@@ -160,16 +183,30 @@ export default function SLPNav() {
                       {item.label}
                     </a>
                     <div className="pl-4 flex flex-col gap-0.5 border-l-2 border-aqua/20 ml-4 my-1">
-                      {item.children.map((sub) => (
-                        <a
-                          key={sub.href}
-                          href={sub.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="px-3 py-2 text-sm text-slate-600 font-medium hover:bg-aqua/10 hover:text-teal-dark rounded-r-lg"
-                        >
-                          {sub.label}
-                        </a>
-                      ))}
+                      {item.children.map((sub) => {
+                        const isPath = sub.href.startsWith('/');
+                        const isExternal = sub.href.startsWith('http');
+                        return isPath ? (
+                          <Link
+                            key={sub.href}
+                            href={sub.href}
+                            onClick={() => setMobileOpen(false)}
+                            className="px-3 py-2 text-sm text-slate-600 font-medium hover:bg-aqua/10 hover:text-teal-dark rounded-r-lg"
+                          >
+                            {sub.label}
+                          </Link>
+                        ) : (
+                          <a
+                            key={sub.href}
+                            href={sub.href}
+                            {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
+                            onClick={() => setMobileOpen(false)}
+                            className="px-3 py-2 text-sm text-slate-600 font-medium hover:bg-aqua/10 hover:text-teal-dark rounded-r-lg"
+                          >
+                            {sub.label}
+                          </a>
+                        );
+                      })}
                     </div>
                   </div>
                 );
@@ -186,7 +223,7 @@ export default function SLPNav() {
               );
             })}
             <a
-              href="#contact"
+              href="/#contact"
               onClick={() => setMobileOpen(false)}
               className="mt-2 px-4 py-3 rounded-lg bg-teal text-white font-semibold text-center"
             >
