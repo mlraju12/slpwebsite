@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      spacing: {
+        50: '12.5rem',
+      },
       colors: {
         /* Aquatic palette – darker */
         aqua: {

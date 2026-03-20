@@ -401,3 +401,32 @@ html:has(.slp-site) {
   mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
 }
+
+
+/* CloudFish subtitle orange animation */
+.slp-orange-pulse {
+  animation: slp-orange-pulse 3.6s ease-in-out infinite;
+}
+@keyframes slp-orange-pulse {
+  0%, 100% {
+    color: #f97316;
+    text-shadow: 0 0 0 rgba(249, 115, 22, 0);
+  }
+  50% {
+    color: #ea580c;
+    text-shadow: 0 0 12px rgba(249, 115, 22, 0.45);
+  }
+}
+
+/* CloudFish centered image subtle float animation */
+.slp-image-float {
+  animation: slp-image-float 5.5s ease-in-out infinite;
+}
+@keyframes slp-image-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
