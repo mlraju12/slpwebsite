@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProductBySlug, getAllProductSlugs } from '@/lib/products';
 import ProductHeroSlideshow from '@/components/ProductHeroSlideshow';
+import FreeTrialCta from '@/components/FreeTrialCta';
 
 /** Button-style plan cards (CloudFish pricing) */
 const PLAN_VARIANT = {
@@ -182,6 +183,13 @@ export default function ProductPage({ params }) {
                       >
                         Contact Us
                       </a>
+                    ) : plan.ctaHref && planId === 'free_trial' ? (
+                      <FreeTrialCta
+                        plan={plan}
+                        fallbackHref={plan.ctaHref}
+                        fallbackLabel={plan.ctaLabel}
+                        className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}
+                      />
                     ) : (
                       <Link href={buyHref} className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}>
                         {ctaLabel}
