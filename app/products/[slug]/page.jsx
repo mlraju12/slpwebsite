@@ -101,24 +101,30 @@ export default function ProductPage({ params }) {
       {product.features && (
         <section
           id="features"
-          className="py-16 px-4 sm:px-6 relative overflow-hidden bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/cloudfish/features-bg.png')" }}
+          className={`py-16 px-4 sm:px-6 relative overflow-hidden ${isCloudFish ? 'bg-cover bg-center bg-no-repeat' : 'bg-gradient-to-br from-teal-50 to-slate-100'}`}
+          style={isCloudFish ? { backgroundImage: "url('/cloudfish/features-bg.png')" } : undefined}
           aria-labelledby="features-title"
         >
-          <div className="absolute inset-0 bg-slate-900/80" aria-hidden />
+          {isCloudFish && <div className="absolute inset-0 bg-slate-900/80" aria-hidden />}
           <div className="max-w-6xl mx-auto relative z-10">
-            <h2 id="features-title" className="text-3xl sm:text-4xl font-bold text-white text-center mb-3">
+            <h2 id="features-title" className={`text-3xl sm:text-4xl font-bold text-center mb-3 ${isCloudFish ? 'text-white' : 'text-slate-900'}`}>
               {product.features.title}
             </h2>
-            <p className="text-lg sm:text-xl text-white/90 text-center mb-12 max-w-2xl mx-auto">
+            <p className={`text-lg sm:text-xl text-center mb-12 max-w-2xl mx-auto ${isCloudFish ? 'text-white/90' : 'text-slate-600'}`}>
               <strong>{product.features.subtitle}</strong>
             </p>
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 list-none p-0 m-0">
               {product.features.items.map((item, i) => (
                 <li
                   key={i}
-                  className={`rounded-xl border-2 border-t-white/45 border-l-white/35 border-b-cyan-900/30 border-r-cyan-900/25 p-6 text-left transition-all duration-300 cursor-pointer shadow-[0_10px_0_0_rgba(8,47,73,0.42),0_10px_24px_rgba(6,182,212,0.28)] hover:shadow-[inset_0_6px_16px_rgba(8,47,73,0.35)] hover:translate-y-2 active:shadow-[inset_0_8px_20px_rgba(8,47,73,0.45)] active:translate-y-3 active:scale-[0.97] ${
-                    item.highlight ? 'bg-gradient-to-br from-cyan-200/95 to-sky-200/90 border-cyan-300/85' : 'bg-gradient-to-br from-cyan-50/95 to-teal-100/85 border-cyan-200/80'
+                  className={`rounded-xl border-2 p-6 text-left transition-all duration-300 cursor-pointer ${
+                    isCloudFish
+                      ? `border-t-white/45 border-l-white/35 border-b-cyan-900/30 border-r-cyan-900/25 shadow-[0_10px_0_0_rgba(8,47,73,0.42),0_10px_24px_rgba(6,182,212,0.28)] hover:shadow-[inset_0_6px_16px_rgba(8,47,73,0.35)] hover:translate-y-2 active:shadow-[inset_0_8px_20px_rgba(8,47,73,0.45)] active:translate-y-3 active:scale-[0.97] ${
+                        item.highlight ? 'bg-gradient-to-br from-cyan-200/95 to-sky-200/90 border-cyan-300/85' : 'bg-gradient-to-br from-cyan-50/95 to-teal-100/85 border-cyan-200/80'
+                      }`
+                      : `border-teal-200 bg-white shadow-md hover:shadow-lg hover:-translate-y-0.5 ${
+                        item.highlight ? 'border-teal-400 bg-teal-50/80' : ''
+                      }`
                   }`}
                 >
                   <span className="text-2xl" aria-hidden>{item.icon}</span>
@@ -148,16 +154,17 @@ export default function ProductPage({ params }) {
               {product.pricing.plans.map((plan) => {
                 const v = PLAN_VARIANT[plan.variant] ?? PLAN_VARIANT.silver;
                 const planId = plan.planId || (plan.variant === 'gold-yearly' ? 'gold_yearly' : plan.variant);
-                const buyHref = product.pricing.loginHref
+                const buyHref = plan.ctaHref || (product.pricing.loginHref
                   ? `${product.pricing.loginHref}?next=${encodeURIComponent('/cloudfish/purchase?plan=' + planId)}`
-                  : 'mailto:info@slpmicrosystems.com?subject=CloudFish%20Plan%20Inquiry';
+                  : 'mailto:info@slpmicrosystems.com?subject=CloudFish%20Plan%20Inquiry');
+                const ctaLabel = plan.ctaLabel || (planId === 'enterprise' ? 'Contact Us' : 'Buy Now');
                 return (
                   <article key={plan.name} className={`flex flex-col p-6 sm:p-7 ${v.card}`}>
                     <h3 className="text-xl font-bold">{plan.name}</h3>
                     <p className={`text-sm mt-1 mb-3 ${v.muted}`}>{plan.description}</p>
                     <div className="mb-1">
                       <span className="text-3xl font-bold">{plan.price}</span>
-                      <span className={`ml-1 ${v.muted}`}>{plan.period}</span>
+                      {plan.period && <span className={`ml-1 ${v.muted}`}>{plan.period}</span>}
                     </div>
                     <p className={`text-xs mb-4 ${v.muted}`}>{plan.note}</p>
                     <ul className="space-y-2 mb-5 flex-1">
@@ -168,7 +175,7 @@ export default function ProductPage({ params }) {
                         </li>
                       ))}
                     </ul>
-                    {planId === 'enterprise' ? (
+                    {planId === 'enterprise' && !plan.ctaHref ? (
                       <a
                         href="mailto:info@slpmicrosystems.com?subject=CloudFish%20Enterprise%20Plan"
                         className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}
@@ -177,7 +184,7 @@ export default function ProductPage({ params }) {
                       </a>
                     ) : (
                       <Link href={buyHref} className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}>
-                        Buy Now
+                        {ctaLabel}
                       </Link>
                     )}
                   </article>

@@ -31,6 +31,14 @@ export default function SLPNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [activeSection, setActiveSection] = useState('');
+  const [hasToken, setHasToken] = useState(false);
+
+  useEffect(() => {
+    const check = () => setHasToken(typeof window !== 'undefined' && !!localStorage.getItem('token'));
+    check();
+    window.addEventListener('auth-change', check);
+    return () => window.removeEventListener('auth-change', check);
+  }, []);
 
   useEffect(() => {
     const sections = [];
@@ -139,6 +147,21 @@ export default function SLPNav() {
           })}
         </nav>
         <div className="flex items-center gap-3">
+          {hasToken ? (
+            <Link
+              href="/account"
+              className="hidden sm:inline-flex px-4 py-2 rounded-lg text-sm font-semibold bg-teal text-white hover:bg-teal-dark transition-all"
+            >
+              Account
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="hidden sm:inline-flex px-4 py-2 rounded-lg text-sm font-semibold border-2 border-teal text-teal hover:bg-teal/10 transition-all"
+            >
+              Log in
+            </Link>
+          )}
           <img
             src="/oracle-service-partner-logo.png"
             alt="Oracle Service Partner"
@@ -222,10 +245,27 @@ export default function SLPNav() {
                 </a>
               );
             })}
+            {hasToken ? (
+              <Link
+                href="/account"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 px-4 py-3 rounded-lg bg-teal text-white font-semibold text-center block"
+              >
+                Account
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 px-4 py-3 rounded-lg border-2 border-teal text-teal font-semibold text-center block"
+              >
+                Log in
+              </Link>
+            )}
             <a
               href="/#contact"
               onClick={() => setMobileOpen(false)}
-              className="mt-2 px-4 py-3 rounded-lg bg-teal text-white font-semibold text-center"
+              className="mt-2 px-4 py-3 rounded-lg bg-teal text-white font-semibold text-center block"
             >
               Contact
             </a>
