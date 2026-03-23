@@ -148,6 +148,12 @@ export default function SLPNav() {
           })}
         </nav>
         <div className="flex items-center gap-3">
+          <ContactTrigger
+            subject="General inquiry"
+            className="hidden sm:inline-flex px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-teal-dark hover:bg-aqua/10 transition-all"
+          >
+            Contact
+          </ContactTrigger>
           {hasToken ? (
             <Link
               href="/account"
@@ -170,12 +176,6 @@ export default function SLPNav() {
             width={140}
             height={32}
           />
-          <ContactTrigger
-            subject="General inquiry"
-            className="hidden sm:inline-flex px-4 py-2 rounded-lg text-sm font-semibold bg-teal text-white hover:bg-teal-dark transition-all"
-          >
-            Contact
-          </ContactTrigger>
           <button
             type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -246,6 +246,13 @@ export default function SLPNav() {
                 </a>
               );
             })}
+            <ContactTrigger
+              subject="General inquiry"
+              onClick={() => setMobileOpen(false)}
+              className="mt-2 px-4 py-3 rounded-lg text-slate-700 font-semibold text-center block w-full hover:bg-aqua/10"
+            >
+              Contact
+            </ContactTrigger>
             {hasToken ? (
               <Link
                 href="/account"
@@ -263,13 +270,6 @@ export default function SLPNav() {
                 Log in
               </Link>
             )}
-            <ContactTrigger
-              subject="General inquiry"
-              onClick={() => setMobileOpen(false)}
-              className="mt-2 px-4 py-3 rounded-lg bg-teal text-white font-semibold text-center block w-full"
-            >
-              Contact
-            </ContactTrigger>
           </nav>
         </div>
       )}
