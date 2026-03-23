@@ -67,7 +67,7 @@ export default function ProductPage({ params }) {
         <ProductHeroSlideshow
           slides={product.heroSlides}
           ctaLoginHref={product.ctaLoginHref}
-          ctaTrialHref={product.ctaTrialHref}
+          ctaTrialHref={`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=free_trial&product=${params.slug}`)}`}
         />
       )}
       {product.appPreview && (
