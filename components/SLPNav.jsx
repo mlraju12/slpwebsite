@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import ContactTrigger from '@/components/ContactTrigger';
 
 const NAV_LINKS = [
   {
@@ -169,12 +170,12 @@ export default function SLPNav() {
             width={140}
             height={32}
           />
-          <a
-            href="/#contact"
+          <ContactTrigger
+            subject="General inquiry"
             className="hidden sm:inline-flex px-4 py-2 rounded-lg text-sm font-semibold bg-teal text-white hover:bg-teal-dark transition-all"
           >
             Contact
-          </a>
+          </ContactTrigger>
           <button
             type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -262,13 +263,13 @@ export default function SLPNav() {
                 Log in
               </Link>
             )}
-            <a
-              href="/#contact"
+            <ContactTrigger
+              subject="General inquiry"
               onClick={() => setMobileOpen(false)}
-              className="mt-2 px-4 py-3 rounded-lg bg-teal text-white font-semibold text-center block"
+              className="mt-2 px-4 py-3 rounded-lg bg-teal text-white font-semibold text-center block w-full"
             >
               Contact
-            </a>
+            </ContactTrigger>
           </nav>
         </div>
       )}

@@ -2,6 +2,7 @@ import './globals.css';
 import './slp.css';
 import { Inter } from 'next/font/google';
 import SLPNav from '@/components/SLPNav';
+import ContactFormProvider from '@/components/ContactFormProvider';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
           <SLPNav />
           {children}
         </div>
+        <ContactFormProvider />
       </body>
     </html>
   );

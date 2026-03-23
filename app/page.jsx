@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import ContactTrigger from '@/components/ContactTrigger';
 
 /** Per-slide text color schemes for hero wording (label, title, subtitle, body) */
 const HERO_TEXT_SCHEMES = {
@@ -57,7 +58,8 @@ const HERO_SLIDES = [
     subtitle2: 'From Legacy to Leading-Edge Performance',
     body: 'Transitioning to the cloud is about more than just software; it\'s about evolving your business. From HCM and Payroll to full-scale ERP, we provide end-to-end implementation, migration, and ongoing support. With over 30 years of experience and a team of Oracle Certified Architects, Oracle isn\'t just a tool we use—it\'s in our DNA.',
     cta: 'Start your transformation now',
-    href: 'mailto:info@slpmicrosystems.com?subject=Oracle%20Cloud%20Transformation',
+    href: '#contact',
+    contactSubject: 'Oracle Cloud Transformation',
     ctaColor: 'teal',
     gradient: 'from-teal-sea to-teal-dark',
     image: '/oracle-cloud-implementation-bg.png',
@@ -336,12 +338,21 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="text-center mt-6">
-                    <a
-                      href={slide.href}
-                      className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
-                    >
-                      {slide.cta}
-                    </a>
+                    {slide.contactSubject ? (
+                      <ContactTrigger
+                        subject={slide.contactSubject}
+                        className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
+                      >
+                        {slide.cta}
+                      </ContactTrigger>
+                    ) : (
+                      <a
+                        href={slide.href}
+                        className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
+                      >
+                        {slide.cta}
+                      </a>
+                    )}
                   </div>
                 </>
               ) : slide.body ? (
@@ -351,24 +362,42 @@ export default function HomePage() {
                   <p className={`text-base sm:text-lg ${scheme.body} mb-8 max-w-2xl mx-auto leading-relaxed`}>
                     {slide.body}
                   </p>
-                  <a
-                    href={slide.href}
-                    className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
-                  >
-                    {slide.cta}
-                  </a>
+                  {slide.contactSubject ? (
+                    <ContactTrigger
+                      subject={slide.contactSubject}
+                      className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
+                    >
+                      {slide.cta}
+                    </ContactTrigger>
+                  ) : (
+                    <a
+                      href={slide.href}
+                      className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
+                    >
+                      {slide.cta}
+                    </a>
+                  )}
                 </>
               ) : (
                 <>
                   <p className={`text-lg sm:text-xl ${scheme.body} mb-10 max-w-2xl mx-auto leading-relaxed`}>
                     {slide.subtitle}
                   </p>
-                  <a
-                    href={slide.href}
-                    className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
-                  >
-                    {slide.cta}
-                  </a>
+                  {slide.contactSubject ? (
+                    <ContactTrigger
+                      subject={slide.contactSubject}
+                      className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
+                    >
+                      {slide.cta}
+                    </ContactTrigger>
+                  ) : (
+                    <a
+                      href={slide.href}
+                      className={`slp-hover-lift inline-flex px-8 py-4 rounded-xl border font-semibold text-lg transition-all duration-300 ${HERO_CTA_STYLES[slide.ctaColor] || 'bg-white/20 backdrop-blur border-white/40 text-white hover:bg-white/30 hover:border-white/60'}`}
+                    >
+                      {slide.cta}
+                    </a>
+                  )}
                 </>
               )}
             </div>
@@ -691,18 +720,18 @@ export default function HomePage() {
             Ready to transform your business with Oracle Cloud? Reach out for a conversation.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="mailto:info@slpmicrosystems.com"
+            <ContactTrigger
+              subject="General inquiry"
               className="px-6 py-3 rounded-xl bg-teal text-white font-semibold hover:bg-teal-dark transition-colors shadow-md"
             >
               Email us
-            </a>
-            <a
-              href="mailto:info@slpmicrosystems.com?subject=Request%20a%20call"
+            </ContactTrigger>
+            <ContactTrigger
+              subject="Request a call"
               className="px-6 py-3 rounded-xl bg-white/90 border border-slate-200 text-slate-800 font-semibold hover:bg-white transition-colors shadow-sm"
             >
               Request a call
-            </a>
+            </ContactTrigger>
           </div>
         </div>
       </section>

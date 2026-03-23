@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProductBySlug, getAllProductSlugs } from '@/lib/products';
 import ProductHeroSlideshow from '@/components/ProductHeroSlideshow';
+import TideSyncContactSection from '@/components/TideSyncContactSection';
+import ContactTrigger from '@/components/ContactTrigger';
 
 /** Button-style plan cards (CloudFish pricing) */
 const PLAN_VARIANT = {
@@ -67,7 +69,9 @@ export default function ProductPage({ params }) {
         <ProductHeroSlideshow
           slides={product.heroSlides}
           ctaLoginHref={product.ctaLoginHref}
-          ctaTrialHref={`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=free_trial&product=${params.slug}`)}`}
+          ctaTrialHref={product.ctaContactHref ? undefined : `/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=free_trial&product=${params.slug}`)}`}
+          ctaContactHref={product.ctaContactHref}
+          ctaContactLabel={product.contactSection?.buttonLabel}
         />
       )}
       {product.appPreview && (
@@ -141,6 +145,13 @@ export default function ProductPage({ params }) {
           </div>
         </section>
       )}
+      {product.contactSection && (
+        <TideSyncContactSection
+          title={product.contactSection.title}
+          subtitle={product.contactSection.subtitle}
+          buttonLabel={product.contactSection.buttonLabel}
+        />
+      )}
       {product.pricing && product.pricing.plans?.length > 0 && (
         <section id="choose-plan" className="py-16 px-4 sm:px-6 bg-white/95" aria-labelledby="choose-plan-title">
           <div className="max-w-6xl mx-auto">
@@ -179,12 +190,12 @@ export default function ProductPage({ params }) {
                       ))}
                     </ul>
                     {planId === 'enterprise' && !plan.ctaHref ? (
-                      <a
-                        href="mailto:info@slpmicrosystems.com?subject=CloudFish%20Enterprise%20Plan"
+                      <ContactTrigger
+                        subject="CloudFish Enterprise Plan"
                         className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}
                       >
                         Contact Us
-                      </a>
+                      </ContactTrigger>
                     ) : (
                       <Link href={buyHref} className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}>
                         {ctaLabel}
@@ -210,7 +221,9 @@ export default function ProductPage({ params }) {
             <div className="mt-3 flex flex-wrap justify-center gap-4 text-xs sm:text-sm">
               <a href="https://www.slpmicrosystems.com/" target="_blank" rel="noopener noreferrer" className="hover:underline">SLP Microsystems</a>
               <a href="https://cloudfish-frontend-5802cd04746c.herokuapp.com/" target="_blank" rel="noopener noreferrer" className="hover:underline">CloudFish app</a>
-              <a href="mailto:info@slpmicrosystems.com" className="hover:underline">Contact</a>
+              <ContactTrigger subject="General inquiry" className="hover:underline">
+                Contact
+              </ContactTrigger>
             </div>
           </div>
         </div>

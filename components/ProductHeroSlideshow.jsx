@@ -11,7 +11,7 @@ function overlayClassForSlide(slide) {
     : 'bg-slate-900/50';
 }
 
-export default function ProductHeroSlideshow({ slides, ctaLoginHref, ctaTrialHref }) {
+export default function ProductHeroSlideshow({ slides, ctaLoginHref, ctaTrialHref, ctaContactHref, ctaContactLabel }) {
   const [current, setCurrent] = useState(0);
   const goTo = useCallback((index) => {
     let i = index;
@@ -105,18 +105,22 @@ export default function ProductHeroSlideshow({ slides, ctaLoginHref, ctaTrialHre
             </h2>
           </div>
         )}
-        {(ctaLoginHref || ctaTrialHref) && (
+        {(ctaLoginHref || ctaTrialHref || ctaContactHref) && (
           <div className={`flex flex-wrap justify-center gap-4 ${showTitle ? 'mt-8' : ''}`}>
             {ctaLoginHref && (
               <Link href={ctaLoginHref} className={ctaLoginClass}>
                 Log in
               </Link>
             )}
-            {ctaTrialHref && (
+            {ctaContactHref ? (
+              <a href={ctaContactHref} className={ctaTrialClass}>
+                {ctaContactLabel || 'Contact us'}
+              </a>
+            ) : ctaTrialHref ? (
               <Link href={ctaTrialHref} className={ctaTrialClass}>
                 Start free trial
               </Link>
-            )}
+            ) : null}
           </div>
         )}
       </div>

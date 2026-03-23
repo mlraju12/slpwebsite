@@ -412,10 +412,10 @@ export default function CentralAccountPage() {
             Upgrade CloudFish
           </Link>
           <Link
-            href="/products/tidesync#choose-plan"
+            href="/products/tidesync#contact-tidesync"
             className="inline-flex px-6 py-3 bg-white border-2 border-slate-300 text-slate-700 font-semibold rounded-lg hover:bg-slate-50"
           >
-            Upgrade TideSync
+            Contact for TideSync
           </Link>
           <button
             onClick={handleLogout}
