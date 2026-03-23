@@ -135,7 +135,7 @@ export default function ProductPage({ params }) {
           </div>
         </section>
       )}
-      {product.pricing && (
+      {product.pricing && product.pricing.plans?.length > 0 && (
         <section id="choose-plan" className="py-16 px-4 sm:px-6 bg-white/95" aria-labelledby="choose-plan-title">
           <div className="max-w-6xl mx-auto">
             <h2 id="choose-plan-title" className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-3">
@@ -147,33 +147,40 @@ export default function ProductPage({ params }) {
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-7">
               {product.pricing.plans.map((plan) => {
                 const v = PLAN_VARIANT[plan.variant] ?? PLAN_VARIANT.silver;
+                const planId = plan.planId || (plan.variant === 'gold-yearly' ? 'gold_yearly' : plan.variant);
+                const buyHref = product.pricing.loginHref
+                  ? `${product.pricing.loginHref}?next=${encodeURIComponent('/cloudfish/purchase?plan=' + planId)}`
+                  : 'mailto:info@slpmicrosystems.com?subject=CloudFish%20Plan%20Inquiry';
                 return (
-                <article
-                  key={plan.name}
-                  className={`flex flex-col p-6 sm:p-7 ${v.card}`}
-                >
-                  <h3 className="text-xl font-bold">{plan.name}</h3>
-                  <p className={`text-sm mt-1 mb-3 ${v.muted}`}>{plan.description}</p>
-                  <div className="mb-1">
-                    <span className="text-3xl font-bold">{plan.price}</span>
-                    <span className={`ml-1 ${v.muted}`}>{plan.period}</span>
-                  </div>
-                  <p className={`text-xs mb-4 ${v.muted}`}>{plan.note}</p>
-                  <ul className="space-y-2 mb-5 flex-1">
-                    {plan.features.map((f) => (
-                      <li key={f} className={`text-sm flex gap-2 ${v.bullet}`}>
-                        <span className="opacity-80">•</span>
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="mailto:info@slpmicrosystems.com?subject=CloudFish%20Choose%20Plan%20Inquiry"
-                    className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}
-                  >
-                    {plan.featured ? 'Contact Us' : 'Buy Now'}
-                  </a>
-                </article>
+                  <article key={plan.name} className={`flex flex-col p-6 sm:p-7 ${v.card}`}>
+                    <h3 className="text-xl font-bold">{plan.name}</h3>
+                    <p className={`text-sm mt-1 mb-3 ${v.muted}`}>{plan.description}</p>
+                    <div className="mb-1">
+                      <span className="text-3xl font-bold">{plan.price}</span>
+                      <span className={`ml-1 ${v.muted}`}>{plan.period}</span>
+                    </div>
+                    <p className={`text-xs mb-4 ${v.muted}`}>{plan.note}</p>
+                    <ul className="space-y-2 mb-5 flex-1">
+                      {plan.features.map((f) => (
+                        <li key={f} className={`text-sm flex gap-2 ${v.bullet}`}>
+                          <span className="opacity-80">•</span>
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {planId === 'enterprise' ? (
+                      <a
+                        href="mailto:info@slpmicrosystems.com?subject=CloudFish%20Enterprise%20Plan"
+                        className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}
+                      >
+                        Contact Us
+                      </a>
+                    ) : (
+                      <Link href={buyHref} className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}>
+                        Buy Now
+                      </Link>
+                    )}
+                  </article>
                 );
               })}
             </div>
