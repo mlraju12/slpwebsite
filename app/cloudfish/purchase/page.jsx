@@ -6,30 +6,37 @@ import Link from 'next/link';
 const API_BASE = process.env.NEXT_PUBLIC_CLOUDFISH_API_URL || 'https://cloudfish-backend-9d54cbd015c1.herokuapp.com/api';
 
 const PLANS = {
+  free_trial: { name: 'Free Trial', price: '$0', desc: '1 connection, 1 worksheet. Full access for 7 days.' },
   silver: { name: 'Silver', price: '$30/month', desc: '2 worksheets, 2 connections. Intellisense, SQL History, export to Excel/CSV/PDF.' },
   gold: { name: 'Gold', price: '$40/month', desc: 'Unlimited connections, unlimited worksheets. All Silver features.' },
   gold_yearly: { name: 'Gold-Yearly', price: '$450/year', desc: 'Unlimited everything. AI SideKick, Tables browser, Packages browser, REST API.' },
   enterprise: { name: 'Enterprise', price: 'Contact us', desc: 'Unlimited PODs, SSO, 24/7 support.' },
 };
 
+const PRODUCT_NAMES = { cloudfish: 'CloudFish', tidesync: 'TideSync' };
+
 export default function CloudFishPurchasePage() {
   const [plan, setPlan] = useState('gold');
+  const [product, setProduct] = useState('cloudfish');
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
+  const [alreadyClaimed, setAlreadyClaimed] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const token = localStorage.getItem('token');
-    if (!token) {
-      const params = new URLSearchParams(window.location.search);
-      const p = params.get('plan') || 'gold';
-      window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${p}`)}`);
-      return;
-    }
     const params = new URLSearchParams(window.location.search);
     const p = params.get('plan');
-    if (p && ['silver', 'gold', 'gold_yearly', 'enterprise'].includes(p)) {
+    const prod = params.get('product') || 'cloudfish';
+    if (!token) {
+      window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${p || 'gold'}&product=${prod}`)}`);
+      return;
+    }
+    if (p && ['free_trial', 'silver', 'gold', 'gold_yearly', 'enterprise'].includes(p)) {
       setPlan(p);
+    }
+    if (prod && ['cloudfish', 'tidesync'].includes(prod)) {
+      setProduct(prod);
     }
     setChecking(false);
   }, []);
@@ -41,21 +48,42 @@ export default function CloudFishPurchasePage() {
     }
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${plan}`)}`);
+      window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${plan}&product=${product}`)}`);
       return;
     }
     setLoading(true);
+    setAlreadyClaimed(false);
     try {
+      if (plan === 'free_trial') {
+        const res = await fetch(`${API_BASE}/account/claim-free-trial`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ product }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok) {
+          window.location.href = '/account';
+          return;
+        }
+        if (data.already_claimed) {
+          setAlreadyClaimed(true);
+          setLoading(false);
+          return;
+        }
+        alert(data.error || 'Could not claim free trial.');
+        setLoading(false);
+        return;
+      }
       const res = await fetch(`${API_BASE}/stripe/create-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ plan }),
+        body: JSON.stringify({ plan, product }),
       });
       if (res.status === 401 || res.status === 403) {
         localStorage.removeItem('token');
         localStorage.removeItem('tok');
         localStorage.removeItem('user');
-        window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${plan}`)}`);
+        window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${plan}&product=${product}`)}`);
         return;
       }
       const data = await res.json().catch(() => ({}));
@@ -80,14 +108,19 @@ export default function CloudFishPurchasePage() {
   }
 
   const planData = PLANS[plan] || PLANS.gold;
+  const productName = PRODUCT_NAMES[product] || 'CloudFish';
+  const isFreeTrial = plan === 'free_trial';
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-16 bg-slate-50 pt-24">
+    <main className="min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-slate-50 pt-24">
       <div className="w-full max-w-lg bg-white rounded-xl shadow-lg border border-slate-200 p-8">
-        <Link href="/products/cloudfish#pricing" className="text-slate-600 hover:text-teal text-sm mb-6 inline-block">
+        <Link href={`/products/${product}#choose-plan`} className="text-slate-600 hover:text-teal text-sm mb-6 inline-block">
           ← Back to plans
         </Link>
-        <h1 className="text-2xl font-bold text-slate-900 mb-6">Complete your purchase</h1>
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">Complete your purchase</h1>
+        <p className="text-sm text-slate-600 mb-6">
+          for <span className="font-semibold text-teal">{productName}</span>
+        </p>
         <div className="mb-4">
           <label htmlFor="plan-select" className="block text-sm font-semibold text-slate-600 mb-2">Select plan</label>
           <select
@@ -96,6 +129,7 @@ export default function CloudFishPurchasePage() {
             onChange={(e) => setPlan(e.target.value)}
             className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:border-teal focus:outline-none"
           >
+            <option value="free_trial">Free Trial – $0 (7 days)</option>
             <option value="silver">Silver – $30/month</option>
             <option value="gold">Gold – $40/month</option>
             <option value="gold_yearly">Gold-Yearly – $450/year</option>
@@ -104,6 +138,11 @@ export default function CloudFishPurchasePage() {
         </div>
         <p className="text-lg font-semibold text-teal mb-1">{planData.name} – {planData.price}</p>
         <p className="text-slate-600 text-sm mb-6">{planData.desc}</p>
+        {alreadyClaimed && (
+          <div className="mb-4 p-4 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 text-sm">
+            You have already claimed your free trial for {productName}. Visit your <Link href="/account" className="font-semibold underline">account page</Link> to view your plans.
+          </div>
+        )}
         <div className="mb-4">
           {plan === 'enterprise' ? (
             <Link
@@ -118,12 +157,14 @@ export default function CloudFishPurchasePage() {
               disabled={loading}
               className="w-full py-3 px-4 bg-teal text-white font-semibold rounded-lg hover:bg-teal-dark disabled:opacity-60 transition-colors"
             >
-              {loading ? 'Loading...' : 'Proceed to payment'}
+              {loading ? 'Loading...' : isFreeTrial ? 'Claim free trial' : 'Proceed to payment'}
             </button>
           )}
         </div>
         <p className="text-slate-500 text-sm">
-          Your plan will be attached to your account after payment. Same login works in the CloudFish app.
+          {isFreeTrial
+            ? `Your free trial will be attached to your account for ${productName}. One free trial per product.`
+            : 'Your plan will be attached to your account after payment. Same login works in the CloudFish app.'}
         </p>
       </div>
     </main>

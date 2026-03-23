@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProductBySlug, getAllProductSlugs } from '@/lib/products';
 import ProductHeroSlideshow from '@/components/ProductHeroSlideshow';
-import FreeTrialCta from '@/components/FreeTrialCta';
 
 /** Button-style plan cards (CloudFish pricing) */
 const PLAN_VARIANT = {
@@ -155,9 +154,12 @@ export default function ProductPage({ params }) {
               {product.pricing.plans.map((plan) => {
                 const v = PLAN_VARIANT[plan.variant] ?? PLAN_VARIANT.silver;
                 const planId = plan.planId || (plan.variant === 'gold-yearly' ? 'gold_yearly' : plan.variant);
-                const buyHref = plan.ctaHref || (product.pricing.loginHref
-                  ? `${product.pricing.loginHref}?next=${encodeURIComponent('/cloudfish/purchase?plan=' + planId)}`
-                  : 'mailto:info@slpmicrosystems.com?subject=CloudFish%20Plan%20Inquiry');
+                const productSlug = params.slug;
+                const buyHref = planId === 'free_trial'
+                  ? `/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=free_trial&product=${productSlug}`)}`
+                  : plan.ctaHref || (product.pricing.loginHref
+                    ? `${product.pricing.loginHref}?next=${encodeURIComponent(`/cloudfish/purchase?plan=${planId}&product=${productSlug}`)}`
+                    : 'mailto:info@slpmicrosystems.com?subject=CloudFish%20Plan%20Inquiry');
                 const ctaLabel = plan.ctaLabel || (planId === 'enterprise' ? 'Contact Us' : 'Buy Now');
                 return (
                   <article key={plan.name} className={`flex flex-col p-6 sm:p-7 ${v.card}`}>
@@ -183,13 +185,6 @@ export default function ProductPage({ params }) {
                       >
                         Contact Us
                       </a>
-                    ) : plan.ctaHref && planId === 'free_trial' ? (
-                      <FreeTrialCta
-                        plan={plan}
-                        fallbackHref={plan.ctaHref}
-                        fallbackLabel={plan.ctaLabel}
-                        className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}
-                      />
                     ) : (
                       <Link href={buyHref} className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}>
                         {ctaLabel}

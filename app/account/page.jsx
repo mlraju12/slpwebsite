@@ -179,8 +179,8 @@ export default function CentralAccountPage() {
     }
   };
 
-  const cloudfishPlan = user?.cloudfish_plan || user?.plan || 'free_trial';
-  const tidesyncPlan = user?.tidesync_plan ?? 'free_trial';
+  const cloudfishPlan = user?.cloudfish_plan ?? user?.plan ?? null;
+  const tidesyncPlan = user?.tidesync_plan ?? null;
   const trialDays = user?.trial_days_remaining;
   const trialEnd = user?.trial_end;
 
@@ -360,19 +360,25 @@ export default function CentralAccountPage() {
             <div className="pb-4 border-b border-slate-100">
               <div className="flex justify-between items-center">
                 <span className="font-medium text-slate-800">CloudFish</span>
-                <span className="text-teal font-semibold">{PLAN_NAMES[cloudfishPlan] || 'Free Trial'}</span>
+                <span className="text-teal font-semibold">{cloudfishPlan ? PLAN_NAMES[cloudfishPlan] : 'Not subscribed'}</span>
               </div>
-              <p className="text-sm text-slate-600 mt-1">{PLAN_DESCRIPTIONS[cloudfishPlan] || ''}</p>
+              <p className="text-sm text-slate-600 mt-1">{cloudfishPlan ? (PLAN_DESCRIPTIONS[cloudfishPlan] || '') : 'Claim your free trial to get started.'}</p>
+              {!cloudfishPlan && (
+                <Link href="/cloudfish/purchase?plan=free_trial&product=cloudfish" className="text-sm text-teal font-semibold hover:underline mt-1 inline-block">Claim free trial →</Link>
+              )}
               <TrialExpiry plan={cloudfishPlan} product="CloudFish" />
             </div>
             <div>
               <div className="flex justify-between items-center">
                 <span className="font-medium text-slate-800">TideSync</span>
-                <span className="text-teal font-semibold">{PLAN_NAMES[tidesyncPlan] || (tidesyncPlan && tidesyncPlan !== 'free_trial' ? tidesyncPlan : 'Free Trial')}</span>
+                <span className="text-teal font-semibold">{tidesyncPlan ? PLAN_NAMES[tidesyncPlan] : 'Not subscribed'}</span>
               </div>
               <p className="text-sm text-slate-600 mt-1">
-                {TIDESYNC_PLAN_DESCRIPTIONS[tidesyncPlan] || PLAN_DESCRIPTIONS[tidesyncPlan] || (tidesyncPlan === 'free_trial' || !tidesyncPlan ? 'Unified data view, automated sync workflows, Oracle Cloud integration.' : 'Not subscribed')}
+                {tidesyncPlan ? (TIDESYNC_PLAN_DESCRIPTIONS[tidesyncPlan] || PLAN_DESCRIPTIONS[tidesyncPlan] || '') : 'Claim your free trial to get started.'}
               </p>
+              {!tidesyncPlan && (
+                <Link href="/cloudfish/purchase?plan=free_trial&product=tidesync" className="text-sm text-teal font-semibold hover:underline mt-1 inline-block">Claim free trial →</Link>
+              )}
               <TrialExpiry plan={tidesyncPlan} product="TideSync" />
             </div>
           </div>
