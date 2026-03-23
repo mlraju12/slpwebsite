@@ -220,7 +220,7 @@ export default function ProductPage({ params }) {
             <p className="text-xs sm:text-sm">16801 Newburgh Road, Livonia, MI 48154</p>
             <div className="mt-3 flex flex-wrap justify-center gap-4 text-xs sm:text-sm">
               <a href="https://www.slpmicrosystems.com/" target="_blank" rel="noopener noreferrer" className="hover:underline">SLP Microsystems</a>
-              <a href="https://cloudfish-frontend-5802cd04746c.herokuapp.com/" target="_blank" rel="noopener noreferrer" className="hover:underline">CloudFish app</a>
+              <a href="https://cloudfish.slpmicrosystems.com/login" target="_blank" rel="noopener noreferrer" className="hover:underline">CloudFish app</a>
               <ContactTrigger subject="General inquiry" className="hover:underline">
                 Contact
               </ContactTrigger>
