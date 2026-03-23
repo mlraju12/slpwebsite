@@ -1,12 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const API_BASE = process.env.NEXT_PUBLIC_CLOUDFISH_API_URL || 'https://cloudfish-backend-9d54cbd015c1.herokuapp.com/api';
 
 export default function CentralSignupPage() {
   const [email, setEmail] = useState('');
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const token = localStorage.getItem('token');
+    if (token) {
+      window.location.href = '/account';
+      return;
+    }
+    setChecking(false);
+  }, []);
+
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
@@ -43,6 +55,14 @@ export default function CentralSignupPage() {
       setLoading(false);
     }
   };
+
+  if (checking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 pt-24">
+        <div className="animate-pulse text-slate-500">Loading...</div>
+      </div>
+    );
+  }
 
   if (success) {
     return (
