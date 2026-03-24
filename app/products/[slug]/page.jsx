@@ -72,6 +72,8 @@ export default function ProductPage({ params }) {
           ctaTrialHref={product.ctaContactHref ? undefined : `/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=free_trial&product=${params.slug}`)}`}
           ctaContactHref={product.ctaContactHref}
           ctaContactLabel={product.contactSection?.buttonLabel}
+          ctaOpenAppHref={product.ctaOpenAppHref}
+          ctaOpenAppLabel={product.ctaOpenAppLabel}
         />
       )}
       {product.appPreview && (

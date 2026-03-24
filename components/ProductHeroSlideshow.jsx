@@ -11,7 +11,15 @@ function overlayClassForSlide(slide) {
     : 'bg-slate-900/50';
 }
 
-export default function ProductHeroSlideshow({ slides, ctaLoginHref, ctaTrialHref, ctaContactHref, ctaContactLabel }) {
+export default function ProductHeroSlideshow({
+  slides,
+  ctaLoginHref,
+  ctaTrialHref,
+  ctaContactHref,
+  ctaContactLabel,
+  ctaOpenAppHref,
+  ctaOpenAppLabel,
+}) {
   const [current, setCurrent] = useState(0);
   const goTo = useCallback((index) => {
     let i = index;
@@ -52,6 +60,11 @@ export default function ProductHeroSlideshow({ slides, ctaLoginHref, ctaTrialHre
     tone === 'dark'
       ? 'inline-flex px-8 py-4 rounded-xl bg-teal text-white font-semibold text-lg hover:bg-teal-dark border-2 border-teal-dark shadow-lg transition-all duration-300'
       : 'inline-flex px-8 py-4 rounded-xl bg-teal text-white font-semibold text-lg hover:bg-teal-dark border-2 border-teal transition-all duration-300';
+
+  const ctaOpenAppClass =
+    tone === 'dark'
+      ? 'inline-flex px-8 py-4 rounded-xl bg-slate-900/90 text-white font-semibold text-lg border-2 border-teal-dark shadow-lg hover:bg-slate-800 hover:border-teal transition-all duration-300'
+      : 'inline-flex px-8 py-4 rounded-xl bg-teal/90 backdrop-blur text-white font-semibold text-lg border-2 border-white/50 hover:bg-teal hover:border-white transition-all duration-300';
 
   const arrowBase =
     tone === 'dark'
@@ -105,7 +118,7 @@ export default function ProductHeroSlideshow({ slides, ctaLoginHref, ctaTrialHre
             </h2>
           </div>
         )}
-        {(ctaLoginHref || ctaTrialHref || ctaContactHref) && (
+        {(ctaLoginHref || ctaTrialHref || ctaContactHref || ctaOpenAppHref) && (
           <div className={`flex flex-wrap justify-center gap-4 ${showTitle ? 'mt-8' : ''}`}>
             {ctaLoginHref && (
               <Link href={ctaLoginHref} className={ctaLoginClass}>
@@ -121,6 +134,16 @@ export default function ProductHeroSlideshow({ slides, ctaLoginHref, ctaTrialHre
                 Start free trial
               </Link>
             ) : null}
+            {ctaOpenAppHref && (
+              <a
+                href={ctaOpenAppHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={ctaOpenAppClass}
+              >
+                {ctaOpenAppLabel || 'Open app'}
+              </a>
+            )}
           </div>
         )}
       </div>
