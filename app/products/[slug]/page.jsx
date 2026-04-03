@@ -74,11 +74,12 @@ export default function ProductPage({ params }) {
           ctaContactLabel={product.contactSection?.buttonLabel}
           ctaOpenAppHref={product.ctaOpenAppHref}
           ctaOpenAppLabel={product.ctaOpenAppLabel}
+          scrollToContentHref={params.slug === 'tidesync' ? '#integration' : '#product-content'}
         />
       )}
       {product.appPreview && (
         <section
-          id="cloudfish-for-you"
+          id="product-content"
           className="relative py-24 px-4 sm:px-6 min-h-[62vh] flex items-center bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${product.appPreview.image})` }}
           aria-labelledby="app-preview-title"
@@ -153,6 +154,84 @@ export default function ProductPage({ params }) {
           subtitle={product.contactSection.subtitle}
           buttonLabel={product.contactSection.buttonLabel}
         />
+      )}
+      {params.slug === 'tidesync' && (
+        <section
+          id="integration"
+          className="py-16 px-4 sm:px-6 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200"
+          aria-labelledby="tidesync-integration-title"
+        >
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 id="tidesync-integration-title" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+              From punches to Oracle Time and Labor
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              TideSync is built to move clock data from biometric readers, badge terminals, and other collection
+              hardware into Oracle Fusion without manual re-entry—so payroll and time administration stay accurate
+              and on schedule.
+            </p>
+            <p className="mt-6">
+              <Link
+                href="/#contact"
+                className="inline-flex px-6 py-3 rounded-xl bg-teal text-white font-semibold hover:bg-teal-dark border-2 border-teal transition-colors"
+              >
+                Talk to us about TideSync
+              </Link>
+            </p>
+          </div>
+        </section>
+      )}
+      {params.slug === 'tidesync' && (
+        <section
+          id="error-management"
+          className="py-16 px-4 sm:px-6 bg-white border-t border-slate-200"
+          aria-labelledby="tidesync-error-title"
+        >
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 id="tidesync-error-title" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+              Error management you can see
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              TideSync surfaces missing punches, timing gaps, and sync issues as they happen—not after payroll has
+              already run. Your team gets clear alerts, resolution paths, and a full trail from swipe to Oracle Time
+              and Labor so nothing slips through unnoticed.
+            </p>
+            <p className="mt-6">
+              <Link
+                href="/#contact"
+                className="inline-flex px-6 py-3 rounded-xl bg-teal text-white font-semibold hover:bg-teal-dark border-2 border-teal transition-colors"
+              >
+                Schedule a walkthrough
+              </Link>
+            </p>
+          </div>
+        </section>
+      )}
+      {params.slug === 'tidesync' && (
+        <section
+          id="data-retention"
+          className="py-16 px-4 sm:px-6 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200"
+          aria-labelledby="tidesync-retention-title"
+        >
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 id="tidesync-retention-title" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+              Data retention & compliance
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              TideSync keeps a durable record of time files and sync activity—archived automatically so your team is
+              not dependent on manual exports. Retrieve historical punches quickly when auditors or operations need
+              proof, and lean on a consistent trail from device to Oracle for reporting and policy reviews.
+            </p>
+            <p className="mt-6">
+              <Link
+                href="/#contact"
+                className="inline-flex px-6 py-3 rounded-xl bg-teal text-white font-semibold hover:bg-teal-dark border-2 border-teal transition-colors"
+              >
+                Ask about retention options
+              </Link>
+            </p>
+          </div>
+        </section>
       )}
       {product.pricing && product.pricing.plans?.length > 0 && (
         <section id="choose-plan" className="py-16 px-4 sm:px-6 bg-white/95" aria-labelledby="choose-plan-title">

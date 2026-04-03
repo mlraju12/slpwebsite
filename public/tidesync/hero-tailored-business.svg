@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" role="img" aria-labelledby="tidesync-tailored-title">
+  <title id="tidesync-tailored-title">Custom business rules and flexible time logic</title>
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#042f2e"/>
+      <stop offset="45%" style="stop-color:#115e59"/>
+      <stop offset="100%" style="stop-color:#164e63"/>
+    </linearGradient>
+    <linearGradient id="accent2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#5eead4"/>
+      <stop offset="100%" style="stop-color:#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="640" fill="url(#bg2)"/>
+  <g opacity="0.06" stroke="#fff" stroke-width="0.5">
+    <path d="M0 320h1200"/>
+    <path d="M600 0v640"/>
+  </g>
+
+  <!-- Rule blocks / branching -->
+  <g transform="translate(100, 120)">
+    <rect x="0" y="0" width="280" height="400" rx="18" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <text x="24" y="42" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="700" letter-spacing="0.12em">YOUR RULES</text>
+    <rect x="24" y="64" width="232" height="56" rx="10" fill="#1e293b" stroke="#475569"/>
+    <text x="40" y="98" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="14" font-weight="600">Shift pattern A</text>
+    <rect x="24" y="136" width="232" height="56" rx="10" fill="#134e4a" stroke="#2dd4bf"/>
+    <text x="40" y="170" fill="#ccfbf1" font-family="system-ui,sans-serif" font-size="14" font-weight="600">Custom punch logic</text>
+    <rect x="24" y="208" width="232" height="56" rx="10" fill="#1e293b" stroke="#475569"/>
+    <text x="40" y="242" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="14" font-weight="600">OTL mapping</text>
+    <path d="M140 280v40" stroke="url(#accent2)" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="130,310 140,330 150,310" fill="#22d3ee"/>
+    <rect x="44" y="340" width="192" height="44" rx="8" fill="#0d9488" stroke="#5eead4" stroke-width="2"/>
+    <text x="140" y="368" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="13" font-weight="700">TIDESYNC ENGINE</text>
+  </g>
+
+  <!-- Sliders / flexibility -->
+  <g transform="translate(460, 160)">
+    <text x="0" y="0" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="700" letter-spacing="0.12em">FLEXIBILITY</text>
+    <g transform="translate(0, 24)">
+      <text x="0" y="18" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="12">Complexity</text>
+      <rect x="120" y="8" width="360" height="10" rx="5" fill="#1e293b"/>
+      <rect x="120" y="8" width="260" height="10" rx="5" fill="url(#accent2)"/>
+      <circle cx="380" cy="13" r="14" fill="#f0fdfa" stroke="#2dd4bf" stroke-width="2"/>
+    </g>
+    <g transform="translate(0, 72)">
+      <text x="0" y="18" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="12">Scale</text>
+      <rect x="120" y="8" width="360" height="10" rx="5" fill="#1e293b"/>
+      <rect x="120" y="8" width="300" height="10" rx="5" fill="url(#accent2)"/>
+      <circle cx="420" cy="13" r="14" fill="#f0fdfa" stroke="#2dd4bf" stroke-width="2"/>
+    </g>
+    <g transform="translate(0, 120)">
+      <text x="0" y="18" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="12">Precision</text>
+      <rect x="120" y="8" width="360" height="10" rx="5" fill="#1e293b"/>
+      <rect x="120" y="8" width="220" height="10" rx="5" fill="url(#accent2)"/>
+      <circle cx="340" cy="13" r="14" fill="#f0fdfa" stroke="#2dd4bf" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Mini Oracle Fusion panel (same header pattern as integration slide) -->
+  <g transform="translate(752, 168) scale(0.5)">
+    <rect x="0" y="0" width="300" height="220" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.2))"/>
+    <rect x="0" y="0" width="300" height="48" rx="18" fill="#e2e8f0"/>
+    <rect x="0" y="32" width="300" height="16" fill="#e2e8f0"/>
+    <circle cx="28" cy="26" r="8" fill="#c2410c"/>
+    <text x="52" y="30" fill="#0f172a" font-family="system-ui,sans-serif" font-size="14" font-weight="700">Oracle Fusion</text>
+    <text x="52" y="48" fill="#64748b" font-family="system-ui,sans-serif" font-size="11">Time and Labor</text>
+    <line x1="16" y1="58" x2="284" y2="58" stroke="#e2e8f0"/>
+    <rect x="20" y="72" width="260" height="36" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="32" y="95" fill="#334155" font-family="system-ui,sans-serif" font-size="12" font-weight="600">OTL mapping</text>
+    <text x="220" y="95" fill="#0d9488" font-family="system-ui,sans-serif" font-size="11">Live</text>
+  </g>
+
+  <!-- Workforce scale rings -->
+  <g transform="translate(1000, 200)" fill="none" stroke-width="2">
+    <circle cx="100" cy="120" r="140" stroke="#334155" opacity="0.6"/>
+    <circle cx="100" cy="120" r="100" stroke="#2dd4bf" opacity="0.5"/>
+    <circle cx="100" cy="120" r="60" stroke="#22d3ee" opacity="0.8"/>
+    <text x="100" y="128" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="15" font-weight="700">ANY SIZE</text>
+  </g>
+</svg>

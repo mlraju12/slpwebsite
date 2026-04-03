@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" role="img" aria-labelledby="tidesync-security-hero-title">
+  <title id="tidesync-security-hero-title">Secure archive with audit trail and Oracle-ready retention</title>
+  <defs>
+    <linearGradient id="secBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c1929"/>
+      <stop offset="55%" style="stop-color:#134e4a"/>
+      <stop offset="100%" style="stop-color:#1e3a5f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="640" fill="url(#secBg)"/>
+
+  <!-- Archive stack: same file-row + tab shape as integration time cards -->
+  <g transform="translate(80, 140)">
+    <text x="0" y="0" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="12" font-weight="700" letter-spacing="0.15em">ARCHIVE</text>
+    <g transform="translate(0, 20)">
+      <rect x="0" y="0" width="320" height="56" rx="8" fill="#334155" stroke="#64748b" stroke-width="2"/>
+      <rect x="12" y="16" width="28" height="24" rx="4" fill="#22c55e"/>
+      <text x="52" y="34" fill="#f1f5f9" font-family="system-ui,sans-serif" font-size="14" font-weight="600">punch_export_2026_02.tar.gz</text>
+      <text x="248" y="34" fill="#86efac" font-family="system-ui,sans-serif" font-size="11">archived</text>
+    </g>
+    <g transform="translate(0, 88)">
+      <rect x="0" y="0" width="320" height="56" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+      <rect x="12" y="16" width="28" height="24" rx="4" fill="#22c55e"/>
+      <text x="52" y="34" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="14" font-weight="600">audit_trail_feb.csv</text>
+      <text x="248" y="34" fill="#86efac" font-family="system-ui,sans-serif" font-size="11">archived</text>
+    </g>
+    <g transform="translate(0, 156)">
+      <rect x="0" y="0" width="320" height="56" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+      <rect x="12" y="16" width="28" height="24" rx="4" fill="#38bdf8"/>
+      <text x="52" y="34" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="14" font-weight="600">tl_sync_log.enc</text>
+      <text x="236" y="34" fill="#7dd3fc" font-family="system-ui,sans-serif" font-size="11">encrypting</text>
+    </g>
+    <!-- Lock icon: same geometry family as prior vault (rounded lock body + shackle) -->
+    <g transform="translate(120, 232)">
+      <rect x="0" y="18" width="80" height="64" rx="10" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+      <path d="M22 18 L22 12 C22 4 30 0 40 0 C50 0 58 4 58 12 L58 18" fill="none" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="40" cy="46" r="10" fill="none" stroke="#2dd4bf" stroke-width="3"/>
+      <path d="M40 46 L40 56" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- Mini Oracle Fusion panel (shared header: orange dot r=8) -->
+  <g transform="translate(440, 360) scale(0.55)">
+    <rect x="0" y="0" width="300" height="200" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.2))"/>
+    <rect x="0" y="0" width="300" height="48" rx="18" fill="#e2e8f0"/>
+    <rect x="0" y="32" width="300" height="16" fill="#e2e8f0"/>
+    <circle cx="28" cy="26" r="8" fill="#c2410c"/>
+    <text x="52" y="30" fill="#0f172a" font-family="system-ui,sans-serif" font-size="14" font-weight="700">Oracle Fusion</text>
+    <text x="52" y="48" fill="#64748b" font-family="system-ui,sans-serif" font-size="11">Retention policies</text>
+    <line x1="16" y1="58" x2="284" y2="58" stroke="#e2e8f0"/>
+    <rect x="20" y="72" width="260" height="36" rx="6" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+    <text x="32" y="95" fill="#334155" font-family="system-ui,sans-serif" font-size="12" font-weight="600">7-year archive</text>
+    <text x="200" y="95" fill="#047857" font-family="system-ui,sans-serif" font-size="11">Compliant</text>
+  </g>
+
+  <!-- Audit trail: same node r=8 as integration flow dots -->
+  <g transform="translate(860, 160)">
+    <text x="0" y="0" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="12" font-weight="700" letter-spacing="0.15em">AUDIT TRAIL</text>
+    <line x1="16" y1="32" x2="16" y2="360" stroke="#475569" stroke-width="2"/>
+    <g transform="translate(0, 40)">
+      <circle cx="16" cy="0" r="8" fill="#22c55e"/>
+      <text x="36" y="5" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="13">Punch ingested - 08:02:14</text>
+    </g>
+    <g transform="translate(0, 100)">
+      <circle cx="16" cy="0" r="8" fill="#22c55e"/>
+      <text x="36" y="5" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="13">Archive checksum verified</text>
+    </g>
+    <g transform="translate(0, 160)">
+      <circle cx="16" cy="0" r="8" fill="#38bdf8"/>
+      <text x="36" y="5" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="13">OTL sync acknowledged</text>
+    </g>
+    <g transform="translate(0, 220)">
+      <circle cx="16" cy="0" r="8" fill="#94a3b8"/>
+      <text x="36" y="5" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="13">Retention policy - 7 yr</text>
+    </g>
+  </g>
+</svg>

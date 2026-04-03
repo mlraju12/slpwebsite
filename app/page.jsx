@@ -681,10 +681,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Who We are | What We do */}
-      <section id="who-we-are" ref={whoRef} className={`slp-section py-24 px-4 bg-gradient-to-br from-slate-900 to-teal-sea text-white ${whoVisible ? 'visible' : ''}`}>
+      {/* About Us */}
+      <section id="about-us" ref={whoRef} className={`slp-section py-24 px-4 bg-gradient-to-br from-slate-900 to-teal-sea text-white ${whoVisible ? 'visible' : ''}`}>
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Who We are | What We do</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">About Us</h2>
           <p className="text-white/90 text-lg mb-6">
             SLP Microsystems has been an Oracle Cloud IT business and consulting leader since 1999.
             As an Oracle Service Partner, we help organizations across every vertical adopt and optimize

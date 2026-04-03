@@ -25,7 +25,7 @@ const NAV_LINKS = [
   { href: '/#talent', label: 'Talent Solutions' },
   { href: '/#careers', label: 'Careers' },
   { href: '/#resources', label: 'Resources' },
-  { href: '/#who-we-are', label: 'Who We are | What We do' },
+  { href: '/#about-us', label: 'About Us' },
 ];
 
 export default function SLPNav() {
