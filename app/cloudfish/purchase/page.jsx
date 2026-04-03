@@ -26,11 +26,14 @@ export default function CloudFishPurchasePage() {
     if (typeof window === 'undefined') return;
     const token = localStorage.getItem('token');
     const params = new URLSearchParams(window.location.search);
-    const p = params.get('plan');
+    let p = params.get('plan');
     const prod = params.get('product') || 'cloudfish';
     if (!token) {
       window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${p || 'gold'}&product=${prod}`)}`);
       return;
+    }
+    if (prod === 'tidesync' && p === 'free_trial') {
+      p = 'gold';
     }
     if (p && ['free_trial', 'silver', 'gold', 'gold_yearly', 'enterprise'].includes(p)) {
       setPlan(p);
@@ -54,7 +57,7 @@ export default function CloudFishPurchasePage() {
     setLoading(true);
     setAlreadyClaimed(false);
     try {
-      if (plan === 'free_trial') {
+      if (plan === 'free_trial' && product !== 'tidesync') {
         const res = await fetch(`${API_BASE}/account/claim-free-trial`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -109,7 +112,7 @@ export default function CloudFishPurchasePage() {
 
   const planData = PLANS[plan] || PLANS.gold;
   const productName = PRODUCT_NAMES[product] || 'CloudFish';
-  const isFreeTrial = plan === 'free_trial';
+  const isFreeTrial = plan === 'free_trial' && product !== 'tidesync';
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-slate-50 pt-24">
@@ -125,11 +128,13 @@ export default function CloudFishPurchasePage() {
           <label htmlFor="plan-select" className="block text-sm font-semibold text-slate-600 mb-2">Select plan</label>
           <select
             id="plan-select"
-            value={plan}
+            value={product === 'tidesync' && plan === 'free_trial' ? 'gold' : plan}
             onChange={(e) => setPlan(e.target.value)}
             className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:border-teal focus:outline-none"
           >
-            <option value="free_trial">Free Trial – $0 (7 days)</option>
+            {product !== 'tidesync' && (
+              <option value="free_trial">Free Trial – $0 (7 days)</option>
+            )}
             <option value="silver">Silver – $30/month</option>
             <option value="gold">Gold – $40/month</option>
             <option value="gold_yearly">Gold-Yearly – $450/year</option>

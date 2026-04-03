@@ -166,7 +166,7 @@ export default function ProductHeroSlideshow({
               </p>
             )}
             <h2
-              className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold max-w-4xl mx-auto leading-tight ${titleText}`}
+              className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold max-w-4xl mx-auto leading-tight ${titleText}`}
               aria-live="polite"
             >
               {hasHeadline ? headline : title}

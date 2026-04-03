@@ -41,10 +41,21 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const product = getProductBySlug(params.slug);
   if (!product) return { title: 'Product | SLP Microsystems' };
-  return {
+  const base = {
     title: `${product.name} | SLP Microsystems`,
     description: product.tagline,
   };
+  if (params.slug === 'cloudfish') {
+    return {
+      ...base,
+      icons: {
+        icon: [{ url: '/cloudfish-button-logo.png', type: 'image/png' }],
+        shortcut: '/cloudfish-button-logo.png',
+        apple: '/cloudfish-button-logo.png',
+      },
+    };
+  }
+  return base;
 }
 
 export default function ProductPage({ params }) {

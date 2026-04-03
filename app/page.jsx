@@ -154,8 +154,8 @@ const PRODUCT_BUTTONS = [
     color: 'bg-white hover:bg-slate-50 border-teal',
     shape: 'rounded-2xl',
     entrance: 'tide',
-    logo: '/tidesync-button-logo.png',
-    wordmark: '/tidesync-wordmark.png',
+    logo: '/tidesync-product-logo.png',
+    logoAlt: 'TideSync',
   },
   {
     name: 'CloudReports',
@@ -527,7 +527,7 @@ export default function HomePage() {
                 <span className={`${logoBoxClass} ${btn.wordmark ? `flex flex-col items-center ${stackGap}` : ''}`}>
                   <Image
                     src={btn.logo}
-                    alt=""
+                    alt={btn.logoAlt ?? ''}
                     width={logoW}
                     height={logoH}
                     className={
@@ -725,12 +725,6 @@ export default function HomePage() {
               className="px-6 py-3 rounded-xl bg-teal text-white font-semibold hover:bg-teal-dark transition-colors shadow-md"
             >
               Email us
-            </ContactTrigger>
-            <ContactTrigger
-              subject="Request a call"
-              className="px-6 py-3 rounded-xl bg-white/90 border border-slate-200 text-slate-800 font-semibold hover:bg-white transition-colors shadow-sm"
-            >
-              Request a call
             </ContactTrigger>
           </div>
         </div>

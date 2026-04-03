@@ -374,11 +374,10 @@ export default function CentralAccountPage() {
                 <span className="text-teal font-semibold">{tidesyncPlan ? PLAN_NAMES[tidesyncPlan] : 'Not subscribed'}</span>
               </div>
               <p className="text-sm text-slate-600 mt-1">
-                {tidesyncPlan ? (TIDESYNC_PLAN_DESCRIPTIONS[tidesyncPlan] || PLAN_DESCRIPTIONS[tidesyncPlan] || '') : 'Claim your free trial to get started.'}
+                {tidesyncPlan
+                  ? TIDESYNC_PLAN_DESCRIPTIONS[tidesyncPlan] || PLAN_DESCRIPTIONS[tidesyncPlan] || ''
+                  : 'Contact us for pricing and access.'}
               </p>
-              {!tidesyncPlan && (
-                <Link href="/cloudfish/purchase?plan=free_trial&product=tidesync" className="text-sm text-teal font-semibold hover:underline mt-1 inline-block">Claim free trial →</Link>
-              )}
               <TrialExpiry plan={tidesyncPlan} product="TideSync" />
             </div>
           </div>
