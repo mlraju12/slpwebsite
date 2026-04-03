@@ -68,9 +68,15 @@ export default function ProductPage({ params }) {
       {product.heroSlides?.length > 0 && (
         <ProductHeroSlideshow
           slides={product.heroSlides}
-          ctaLoginHref={product.ctaLoginHref}
-          ctaTrialHref={product.ctaContactHref ? undefined : `/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=free_trial&product=${params.slug}`)}`}
-          ctaContactHref={product.ctaContactHref}
+          ctaLoginHref={params.slug === 'tidesync' ? undefined : product.ctaLoginHref}
+          ctaTrialHref={
+            params.slug === 'tidesync'
+              ? undefined
+              : product.ctaContactHref
+                ? undefined
+                : `/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=free_trial&product=${params.slug}`)}`
+          }
+          ctaContactHref={params.slug === 'tidesync' ? undefined : product.ctaContactHref}
           ctaContactLabel={product.contactSection?.buttonLabel}
           ctaOpenAppHref={product.ctaOpenAppHref}
           ctaOpenAppLabel={product.ctaOpenAppLabel}
