@@ -55,16 +55,6 @@ export async function generateMetadata({ params }) {
       },
     };
   }
-  if (params.slug === 'tidesync') {
-    return {
-      ...base,
-      icons: {
-        icon: [{ url: '/tidesync-product-logo.png', type: 'image/png' }],
-        shortcut: '/tidesync-product-logo.png',
-        apple: '/tidesync-product-logo.png',
-      },
-    };
-  }
   return base;
 }
 
