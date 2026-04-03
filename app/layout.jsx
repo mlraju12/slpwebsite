@@ -9,6 +9,11 @@ const inter = Inter({ subsets: ['latin'], display: 'swap' });
 export const metadata = {
   title: 'SLP Microsystems | Oracle Cloud IT Business & Consulting',
   description: 'Oracle Service Partner since 1999. Cloud solutions, HCM, Payroll, ERP, Managed Services, Data Analytics & Training.',
+  icons: {
+    icon: [{ url: '/slp-favicon.png', type: 'image/png' }],
+    shortcut: '/slp-favicon.png',
+    apple: '/slp-favicon.png',
+  },
 };
 
 export default function RootLayout({ children }) {
