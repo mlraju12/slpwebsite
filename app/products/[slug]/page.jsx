@@ -248,16 +248,23 @@ export default function ProductPage({ params }) {
             <p className="text-lg sm:text-xl text-slate-600 text-center mb-12 max-w-2xl mx-auto">
               <strong>{product.pricing.subtitle}</strong>
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-7">
+            <div
+              className={`grid grid-cols-1 gap-6 md:gap-7 ${
+                product.pricing.plans.length <= 2
+                  ? 'md:grid-cols-2 max-w-4xl mx-auto'
+                  : 'md:grid-cols-2 xl:grid-cols-4'
+              }`}
+            >
               {product.pricing.plans.map((plan) => {
                 const v = PLAN_VARIANT[plan.variant] ?? PLAN_VARIANT.silver;
                 const planId = plan.planId || (plan.variant === 'gold-yearly' ? 'gold_yearly' : plan.variant);
                 const productSlug = params.slug;
+                const purchaseQuery = `/cloudfish/purchase?plan=${planId}&product=${productSlug}`;
                 const buyHref = planId === 'free_trial'
                   ? `/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=free_trial&product=${productSlug}`)}`
                   : plan.ctaHref || (product.pricing.loginHref
-                    ? `${product.pricing.loginHref}?next=${encodeURIComponent(`/cloudfish/purchase?plan=${planId}&product=${productSlug}`)}`
-                    : 'mailto:info@slpmicrosystems.com?subject=CloudFish%20Plan%20Inquiry');
+                    ? `${product.pricing.loginHref}?next=${encodeURIComponent(purchaseQuery)}`
+                    : `mailto:info@slpmicrosystems.com?subject=${encodeURIComponent(`${product.name} plan inquiry`)}`);
                 const ctaLabel = plan.ctaLabel || (planId === 'enterprise' ? 'Contact Us' : 'Buy Now');
                 return (
                   <article key={plan.name} className={`flex flex-col p-6 sm:p-7 ${v.card}`}>
@@ -278,7 +285,7 @@ export default function ProductPage({ params }) {
                     </ul>
                     {planId === 'enterprise' && !plan.ctaHref ? (
                       <ContactTrigger
-                        subject="CloudFish Enterprise Plan"
+                        subject={`${product.name} Enterprise Plan`}
                         className={`inline-flex w-full justify-center px-4 py-3 rounded-xl font-semibold transition-colors ${v.cta}`}
                       >
                         Contact Us

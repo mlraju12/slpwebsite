@@ -13,7 +13,24 @@ const PLANS = {
   enterprise: { name: 'Enterprise', price: 'Contact us', desc: 'Unlimited PODs, SSO, 24/7 support.' },
 };
 
+/** TideSync product plans (see /products/tidesync#choose-plan) */
+const TIDESYNC_PLANS = {
+  tidesync_gold: {
+    name: 'Gold',
+    price: '$5,000 / 6 months',
+    desc: 'Email support, export to CSV/Excel and more, multiple time collection devices, approved hours by employee, approved hours by date range.',
+  },
+  enterprise: {
+    name: 'Enterprise',
+    price: 'Contact us',
+    desc: 'Custom pricing for your organization. Same capabilities as Gold with volume options and tailored support.',
+  },
+};
+
 const PRODUCT_NAMES = { cloudfish: 'CloudFish', tidesync: 'TideSync' };
+
+const CLOUDFISH_PLAN_IDS = ['free_trial', 'silver', 'gold', 'gold_yearly', 'enterprise'];
+const TIDESYNC_PLAN_IDS = ['tidesync_gold', 'enterprise'];
 
 export default function CloudFishPurchasePage() {
   const [plan, setPlan] = useState('gold');
@@ -29,13 +46,20 @@ export default function CloudFishPurchasePage() {
     let p = params.get('plan');
     const prod = params.get('product') || 'cloudfish';
     if (!token) {
-      window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${p || 'gold'}&product=${prod}`)}`);
+      const defaultPlan = prod === 'tidesync' ? 'tidesync_gold' : 'gold';
+      window.location.replace(`/login?next=${encodeURIComponent(`/cloudfish/purchase?plan=${p || defaultPlan}&product=${prod}`)}`);
       return;
     }
-    if (prod === 'tidesync' && p === 'free_trial') {
-      p = 'gold';
+    if (prod === 'tidesync' && (p === 'free_trial' || p === 'gold')) {
+      p = 'tidesync_gold';
     }
-    if (p && ['free_trial', 'silver', 'gold', 'gold_yearly', 'enterprise'].includes(p)) {
+    if (prod === 'tidesync') {
+      if (p && TIDESYNC_PLAN_IDS.includes(p)) {
+        setPlan(p);
+      } else {
+        setPlan('tidesync_gold');
+      }
+    } else if (p && CLOUDFISH_PLAN_IDS.includes(p)) {
       setPlan(p);
     }
     if (prod && ['cloudfish', 'tidesync'].includes(prod)) {
@@ -110,7 +134,10 @@ export default function CloudFishPurchasePage() {
     );
   }
 
-  const planData = PLANS[plan] || PLANS.gold;
+  const planData =
+    product === 'tidesync'
+      ? TIDESYNC_PLANS[plan] || TIDESYNC_PLANS.tidesync_gold
+      : PLANS[plan] || PLANS.gold;
   const productName = PRODUCT_NAMES[product] || 'CloudFish';
   const isFreeTrial = plan === 'free_trial' && product !== 'tidesync';
 
@@ -128,17 +155,30 @@ export default function CloudFishPurchasePage() {
           <label htmlFor="plan-select" className="block text-sm font-semibold text-slate-600 mb-2">Select plan</label>
           <select
             id="plan-select"
-            value={product === 'tidesync' && plan === 'free_trial' ? 'gold' : plan}
+            value={
+              product === 'tidesync'
+                ? plan === 'gold' || plan === 'free_trial'
+                  ? 'tidesync_gold'
+                  : plan
+                : plan
+            }
             onChange={(e) => setPlan(e.target.value)}
             className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:border-teal focus:outline-none"
           >
-            {product !== 'tidesync' && (
-              <option value="free_trial">Free Trial – $0 (7 days)</option>
+            {product === 'tidesync' ? (
+              <>
+                <option value="tidesync_gold">Gold – $5,000 / 6 months</option>
+                <option value="enterprise">Enterprise – Contact us</option>
+              </>
+            ) : (
+              <>
+                <option value="free_trial">Free Trial – $0 (7 days)</option>
+                <option value="silver">Silver – $30/month</option>
+                <option value="gold">Gold – $40/month</option>
+                <option value="gold_yearly">Gold-Yearly – $450/year</option>
+                <option value="enterprise">Enterprise – Contact us</option>
+              </>
             )}
-            <option value="silver">Silver – $30/month</option>
-            <option value="gold">Gold – $40/month</option>
-            <option value="gold_yearly">Gold-Yearly – $450/year</option>
-            <option value="enterprise">Enterprise – Contact us</option>
           </select>
         </div>
         <p className="text-lg font-semibold text-teal mb-1">{planData.name} – {planData.price}</p>
@@ -169,7 +209,9 @@ export default function CloudFishPurchasePage() {
         <p className="text-slate-500 text-sm">
           {isFreeTrial
             ? `Your free trial will be attached to your account for ${productName}. One free trial per product.`
-            : 'Your plan will be attached to your account after payment. Same login works in the CloudFish app.'}
+            : product === 'tidesync'
+              ? 'Your plan will be attached to your account after payment. Use the same login for TideSync.'
+              : 'Your plan will be attached to your account after payment. Same login works in the CloudFish app.'}
         </p>
       </div>
     </main>
