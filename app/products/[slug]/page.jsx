@@ -219,55 +219,129 @@ export default function ProductPage({ params }) {
       )}
       {params.slug === 'tidesync' && (
         <section
-          id="integration"
-          className="py-16 px-4 sm:px-6 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200"
-          aria-labelledby="tidesync-integration-title"
+          className="py-16 sm:py-24 px-4 sm:px-6 border-t border-slate-200 bg-[radial-gradient(ellipse_120%_80%_at_50%_-20%,rgba(20,184,166,0.12),transparent_55%),linear-gradient(to_bottom,#f8fafc,#ffffff_40%,#f1f5f9)]"
+          aria-labelledby="tidesync-story-heading"
         >
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 id="tidesync-integration-title" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
-              From punches to Oracle Time and Labor
-            </h2>
-            <p className="text-slate-600 text-lg leading-relaxed">
-              TideSync is built to move clock data from biometric readers, badge terminals, and other collection
-              hardware into Oracle Fusion without manual re-entry—so payroll and time administration stay accurate
-              and on schedule.
-            </p>
-          </div>
-        </section>
-      )}
-      {params.slug === 'tidesync' && (
-        <section
-          id="error-management"
-          className="py-16 px-4 sm:px-6 bg-white border-t border-slate-200"
-          aria-labelledby="tidesync-error-title"
-        >
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 id="tidesync-error-title" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
-              Error management you can see
-            </h2>
-            <p className="text-slate-600 text-lg leading-relaxed">
-              TideSync surfaces missing punches, timing gaps, and sync issues as they happen—not after payroll has
-              already run. Your team gets clear alerts, resolution paths, and a full trail from swipe to Oracle Time
-              and Labor so nothing slips through unnoticed.
-            </p>
-          </div>
-        </section>
-      )}
-      {params.slug === 'tidesync' && (
-        <section
-          id="data-retention"
-          className="py-16 px-4 sm:px-6 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200"
-          aria-labelledby="tidesync-retention-title"
-        >
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 id="tidesync-retention-title" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
-              Data retention & compliance
-            </h2>
-            <p className="text-slate-600 text-lg leading-relaxed">
-              TideSync keeps a durable record of time files and sync activity—archived automatically so your team is
-              not dependent on manual exports. Retrieve historical punches quickly when auditors or operations need
-              proof, and lean on a consistent trail from device to Oracle for reporting and policy reviews.
-            </p>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-teal mb-3">How TideSync fits in</p>
+              <h2
+                id="tidesync-story-heading"
+                className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight"
+              >
+                From punch clock to payroll—three ways we keep you in control
+              </h2>
+            </div>
+
+            <div className="space-y-12 sm:space-y-16">
+              <article
+                id="integration"
+                className="scroll-mt-28 grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center"
+              >
+                <div className="relative order-2 md:order-1">
+                  <div
+                    className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-teal/30 via-cyan-200/40 to-teal/20 blur-sm opacity-80"
+                    aria-hidden
+                  />
+                  <div className="relative flex aspect-[5/4] max-h-[280px] md:max-h-none md:min-h-[min(320px,36vw)] items-center justify-center rounded-3xl border border-teal-200/60 bg-gradient-to-br from-white via-teal-50/80 to-cyan-50/90 shadow-[0_12px_40px_-12px_rgba(15,118,110,0.25)]">
+                    <span className="text-7xl sm:text-8xl select-none" aria-hidden>
+                      ⏱️
+                    </span>
+                    <span className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 px-3 py-2 text-center text-xs font-semibold uppercase tracking-wide text-teal-dark shadow-sm">
+                      Device → Oracle OTL
+                    </span>
+                  </div>
+                </div>
+                <div className="order-1 md:order-2 text-left">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-teal/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-teal-dark">
+                    <span className="text-base leading-none" aria-hidden>
+                      01
+                    </span>
+                    Integration
+                  </span>
+                  <h3 id="tidesync-integration-title" className="mt-4 text-2xl sm:text-3xl font-bold text-slate-900">
+                    From punches to Oracle Time and Labor
+                  </h3>
+                  <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+                    TideSync moves clock data from biometric readers, badge terminals, and other collection hardware
+                    into Oracle Fusion without manual re-entry—so payroll and time administration stay accurate and on
+                    schedule.
+                  </p>
+                </div>
+              </article>
+
+              <article
+                id="error-management"
+                className="scroll-mt-28 grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center"
+              >
+                <div className="relative order-2">
+                  <div
+                    className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-amber-200/50 via-orange-100/40 to-amber-100/30 blur-sm opacity-90"
+                    aria-hidden
+                  />
+                  <div className="relative flex aspect-[5/4] max-h-[280px] md:max-h-none md:min-h-[min(320px,36vw)] items-center justify-center rounded-3xl border border-amber-200/70 bg-gradient-to-br from-amber-50 via-white to-orange-50/90 shadow-[0_12px_40px_-12px_rgba(217,119,6,0.2)]">
+                    <span className="text-7xl sm:text-8xl select-none" aria-hidden>
+                      🔍
+                    </span>
+                    <span className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 px-3 py-2 text-center text-xs font-semibold uppercase tracking-wide text-amber-900 shadow-sm">
+                      See issues before payroll
+                    </span>
+                  </div>
+                </div>
+                <div className="order-1 md:order-1 text-left md:col-start-1 md:row-start-1">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-amber-100/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-900">
+                    <span className="text-base leading-none" aria-hidden>
+                      02
+                    </span>
+                    Visibility
+                  </span>
+                  <h3 id="tidesync-error-title" className="mt-4 text-2xl sm:text-3xl font-bold text-slate-900">
+                    Error management you can see
+                  </h3>
+                  <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+                    TideSync surfaces missing punches, timing gaps, and sync issues as they happen—not after payroll has
+                    already run. Your team gets clear alerts, resolution paths, and a full trail from swipe to Oracle
+                    Time and Labor so nothing slips through unnoticed.
+                  </p>
+                </div>
+              </article>
+
+              <article
+                id="data-retention"
+                className="scroll-mt-28 grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center"
+              >
+                <div className="relative order-2 md:order-1">
+                  <div
+                    className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-indigo-200/40 via-slate-200/30 to-teal-100/40 blur-sm opacity-80"
+                    aria-hidden
+                  />
+                  <div className="relative flex aspect-[5/4] max-h-[280px] md:max-h-none md:min-h-[min(320px,36vw)] items-center justify-center rounded-3xl border border-slate-200/80 bg-gradient-to-br from-slate-50 via-indigo-50/60 to-teal-50/70 shadow-[0_12px_40px_-12px_rgba(15,23,42,0.18)]">
+                    <span className="text-7xl sm:text-8xl select-none" aria-hidden>
+                      🗄️
+                    </span>
+                    <span className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 px-3 py-2 text-center text-xs font-semibold uppercase tracking-wide text-slate-700 shadow-sm">
+                      Audit-ready history
+                    </span>
+                  </div>
+                </div>
+                <div className="order-1 md:order-2 text-left">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-slate-700">
+                    <span className="text-base leading-none" aria-hidden>
+                      03
+                    </span>
+                    Compliance
+                  </span>
+                  <h3 id="tidesync-retention-title" className="mt-4 text-2xl sm:text-3xl font-bold text-slate-900">
+                    Data retention & compliance
+                  </h3>
+                  <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+                    TideSync keeps a durable record of time files and sync activity—archived automatically so your team
+                    is not dependent on manual exports. Retrieve historical punches quickly when auditors or operations
+                    need proof, and lean on a consistent trail from device to Oracle for reporting and policy reviews.
+                  </p>
+                </div>
+              </article>
+            </div>
           </div>
         </section>
       )}
