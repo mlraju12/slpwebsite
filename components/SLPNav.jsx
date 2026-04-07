@@ -193,7 +193,8 @@ export default function SLPNav() {
         </div>
       </div>
       {mobileOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-t shadow-lg py-4 px-4">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-sm border-t border-slate-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <nav className="flex flex-col gap-1">
             {NAV_LINKS.map((item) => {
               if (item.children && item.children.length > 0) {
@@ -271,6 +272,7 @@ export default function SLPNav() {
               </Link>
             )}
           </nav>
+          </div>
         </div>
       )}
     </header>

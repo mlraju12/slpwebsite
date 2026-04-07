@@ -154,8 +154,11 @@ const PRODUCT_BUTTONS = [
     color: 'bg-white hover:bg-slate-50 border-teal',
     shape: 'rounded-2xl',
     entrance: 'tide',
-    logo: '/tidesync-product-logo.png',
-    logoAlt: 'TideSync',
+    /** Text stack instead of wordmark PNG so title + tagline can use distinct, high-contrast colors */
+    textStack: [
+      { text: 'TideSync', className: 'text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight' },
+      { text: 'Time punches to OTL', className: 'text-sm sm:text-base font-semibold text-teal' },
+    ],
   },
   {
     name: 'CloudReports',
@@ -523,7 +526,15 @@ export default function HomePage() {
               const logoW = btn.logoLarge ? 560 : 460;
               const logoH = btn.logoLarge ? 380 : 300;
               const stackGap = btn.wordmarkLargeStack ? 'gap-1' : 'gap-3';
-              const inner = btn.logo ? (
+              const inner = btn.textStack?.length ? (
+                <span className={`${logoBoxClass} flex flex-col items-center justify-center gap-2 text-center px-2`}>
+                  {btn.textStack.map((line) => (
+                    <span key={line.text} className={line.className}>
+                      {line.text}
+                    </span>
+                  ))}
+                </span>
+              ) : btn.logo ? (
                 <span className={`${logoBoxClass} ${btn.wordmark ? `flex flex-col items-center ${stackGap}` : ''}`}>
                   <Image
                     src={btn.logo}
