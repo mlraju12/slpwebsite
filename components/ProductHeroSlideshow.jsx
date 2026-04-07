@@ -91,7 +91,7 @@ export default function ProductHeroSlideshow({
       : 'inline-flex px-8 py-4 rounded-xl bg-teal/90 backdrop-blur text-white font-semibold text-lg border-2 border-white/50 hover:bg-teal hover:border-white transition-all duration-300';
 
   const slideCtaYellowClass =
-    'inline-flex items-center justify-center px-8 py-3.5 sm:py-4 rounded-full bg-amber-400 text-slate-900 font-bold text-base sm:text-lg border-2 border-amber-600/90 shadow-lg shadow-black/25 hover:bg-amber-300 hover:border-amber-500 transition-all duration-300';
+    'inline-flex items-center justify-center px-8 py-4 rounded-xl bg-amber-400 text-slate-900 font-semibold text-lg border-2 border-amber-600/90 shadow-lg shadow-black/25 hover:bg-amber-300 hover:border-amber-500 transition-all duration-300';
 
   const slideCtaButtonClass =
     slide?.ctaStyle === 'yellow' ? slideCtaYellowClass : ctaTrialClass;
