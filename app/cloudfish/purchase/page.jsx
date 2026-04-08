@@ -101,10 +101,12 @@ export default function CloudFishPurchasePage() {
         setLoading(false);
         return;
       }
+      const stripePlan =
+        product === 'tidesync' && plan === 'tidesync_gold' ? 'gold' : plan;
       const res = await fetch(`${API_BASE}/stripe/create-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ plan, product }),
+        body: JSON.stringify({ plan: stripePlan, product }),
       });
       if (res.status === 401 || res.status === 403) {
         localStorage.removeItem('token');
