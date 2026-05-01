@@ -45,7 +45,16 @@ export default function CloudFishLoginPage() {
         localStorage.setItem('user', JSON.stringify(data.user));
         const params = new URLSearchParams(window.location.search);
         const next = params.get('next');
-        window.location.href = next && next.startsWith('/') ? next : next ? `/${next}` : '/account';
+        const needsRenew =
+          data.purchase_required &&
+          ['FREE_TRIAL_EXPIRED', 'NO_CLOUDFISH_ENTITLEMENT'].includes(data.code);
+        if (next) {
+          window.location.href = next.startsWith('http') ? next : next.startsWith('/') ? next : `/${next}`;
+        } else if (needsRenew) {
+          window.location.href = '/cloudfish/purchase?plan=gold&product=cloudfish';
+        } else {
+          window.location.href = '/account';
+        }
       } else {
         setError(data.error || 'Login failed. Please check your credentials.');
       }

@@ -32,8 +32,13 @@ export default function VerifyPage() {
           localStorage.setItem('user', JSON.stringify(data.user));
           window.dispatchEvent(new Event('auth-change'));
           setStatus('success');
-          // Redirect to CloudFish with token in hash so it can auto-login
-          window.location.href = `${CLOUDFISH_APP_URL}#auth_token=${encodeURIComponent(data.access_token)}`;
+          const needsRenew =
+            data.purchase_required &&
+            ['FREE_TRIAL_EXPIRED', 'NO_CLOUDFISH_ENTITLEMENT'].includes(data.code);
+          // Lapsed trial/subscription: send to purchase flow on main site so they can repurchase without being blocked by the CloudFish SPA.
+          window.location.href = needsRenew
+            ? `/cloudfish/purchase?plan=gold&product=cloudfish`
+            : `${CLOUDFISH_APP_URL}#auth_token=${encodeURIComponent(data.access_token)}`;
         } else {
           setStatus('error');
           setError(data.error || 'Verification failed. The link may have expired.');
